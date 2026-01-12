@@ -1,10 +1,27 @@
-from flask import Flask
+from collections import deque
 
-app = Flask(__name__)
+class Note:
+    def __init__(self, text, date):
+        self.text = text
+        self.date = date
 
-@app.route("/ping")
-def ping():
-    return "pong"
+    def __str__(self):
+        return f"[{self.date}] {self.text}"
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+class NotebookQueue:
+    def __init__(self):
+        self.notes = deque()
+
+    def add_note(self, note):
+        self.notes.append(note)
+
+    def get_next_note(self):
+        if not self.notes:
+            raise IndexError("Черга порожня! Немає нотаток для обробки.")
+        return self.notes.popleft()
+
+    def is_empty(self):
+        return len(self.notes) == 0
+
+    def size(self):
+        return len(self.notes)
