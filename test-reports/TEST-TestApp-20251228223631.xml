@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestApp-20251228223631" tests="1" file=".py" time="0.011" timestamp="2025-12-28T22:36:31" failures="0" errors="0" skipped="0">
+	<testcase classname="TestApp" name="test_ping" time="0.011" timestamp="2025-12-28T22:36:31" file="app_tests.py" line="6"/>
+</testsuite>

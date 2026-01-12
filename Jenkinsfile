@@ -1,24 +1,25 @@
 pipeline {
     agent any
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/dimkasimka228/PakhalovychLAB2025-_1.git'
             }
         }
         stage('Install dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                bat 'pip install -r requirements.txt'
             }
         }
         stage('Run tests') {
             steps {
-                sh 'python app_tests.py'
+                bat 'pytest --junitxml=test-reports/results.xml'
             }
-            post {
-                always {
-                    junit 'test-reports/*.xml'
-                }
+        }
+        stage('Publish results') {
+            steps {
+                junit 'test-reports/results.xml'
             }
         }
     }
