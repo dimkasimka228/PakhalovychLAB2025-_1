@@ -9,22 +9,12 @@ pipeline {
         }
 
         stage('Install dependencies') {
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                }
-            }
             steps {
                 sh 'pip install -r requirements.txt'
             }
         }
 
         stage('Run tests') {
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                }
-            }
             steps {
                 sh 'pytest --junitxml=test-reports/results.xml'
             }
