@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB = credentials('dockerhub-creds')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -25,6 +29,19 @@ pipeline {
                 always {
                     junit 'test-reports/*.xml'
                 }
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t dimkasimka228/python-lab4:latest .'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+                sh 'docker push dimkasimka228/python-lab4:latest'
             }
         }
     }
