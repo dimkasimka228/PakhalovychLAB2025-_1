@@ -4,25 +4,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/dimkasimka228/PakhalovychLAB2025-_1.git'
+                // Клонування репозиторію з гілки main
+                git branch: 'main', url: 'https://github.com/dimkasimka228/PakhalovychLAB2025-_1'
             }
         }
 
-        stage('Install dependencies') {
+        stage('Run Unit Tests') {
             steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-
-        stage('Run tests') {
-            steps {
-                sh 'pytest --junitxml=test-reports/results.xml'
-            }
-        }
-
-        stage('Publish results') {
-            steps {
-                junit 'test-reports/results.xml'
+                // Запуск одного файлу tests.py
+                sh '''
+                python3 -m unittest app_tests.py
+                '''
             }
         }
     }
