@@ -34,14 +34,17 @@ pipeline {
 
         stage('Build Docker image') {
             steps {
-                sh 'docker build -t dimkasimka228/python-lab4:latest .'
+                // Збираємо образ під Docker Hub акаунт pkhalovych
+                sh 'docker build -t pkhalovych/python-lab4:latest .'
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
+                // Логін у Docker Hub через креденшали
                 sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
-                sh 'docker push dimkasimka228/python-lab4:latest'
+                // Пушимо образ у pkhalovych/python-lab4
+                sh 'docker push pkhalovych/python-lab4:latest'
             }
         }
     }
